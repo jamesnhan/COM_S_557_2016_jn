@@ -29,7 +29,7 @@
 #include "HCI557Common.h"
 #include "CoordSystem.h"
 #include "Plane3D.h"
-#include "Texture.h"
+#include "TextureTriple.h"
 
 
 
@@ -74,7 +74,7 @@ int main(int argc, const char * argv[])
     
     
     // create an apperance object.
-    GLAppearance* apperance_0 = new GLAppearance("../../data/shaders/multi_texture.vs", "../../data/shaders/multi_texture.fs");
+    GLAppearance* apperance_0 = new GLAppearance("multi_texture.vs", "multi_texture.fs");
     
     GLDirectLightSource  light_source;
     light_source._lightPos = glm::vec4(00.0,20.0,20.0, 0.0);
@@ -112,9 +112,8 @@ int main(int argc, const char * argv[])
     
     //************************************************************************************************
     // Add a texture
-    GLMultiTexture* texture = new GLMultiTexture();
-    int texid = texture->loadAndCreateTextures("../../data/textures/texture_brick.bmp", "../../data/textures/light_512_512a.bmp");
-    //int texid = texture->loadAndCreateTexture("../../data/textures/texture_earth_128x128_a.bmp");
+    GLTripleTexture* texture = new GLTripleTexture();
+    texture->loadAndCreateTextures("gradient.bmp", "environment.bmp", "animal.bmp");
     apperance_0->setTexture(texture);
     
     //************************************************************************************************
@@ -185,6 +184,7 @@ int main(int argc, const char * argv[])
  
         
         // change the texture appearance blend mode
+		g_change_texture_blend = 0;
         bool ret = texture->setTextureBlendMode(g_change_texture_blend);
         if(ret)apperance_0->updateTextures();
         
